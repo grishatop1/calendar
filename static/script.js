@@ -24,8 +24,8 @@ $(document).ready(function() {
         });
     })
     .catch(err => {
-        $(".loading-text p").text("ГРЕШКА")
-        $(".loading-text p").css("color", "red")
+        $(".loading-header h2").text("ГРЕШКА")
+        $(".loading-header h2").css("color", "red")
     });
 });
 

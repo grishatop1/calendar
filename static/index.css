@@ -124,6 +124,10 @@ body {
     box-shadow: 0px 0px 7px 1px rgba(255, 1, 1, 0.3) !important;
 }
 
+.red h2 {
+    color: #ff4545 !important;
+}
+
 .today {
     border: 2px solid var(--text-color);
 }
