@@ -33,6 +33,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    user-select: none;
 }
 
 .loading-header {
@@ -48,12 +49,14 @@ body {
     /* upper case */
     text-transform: uppercase;
     letter-spacing: -2px;
+    user-select: none;
 }
 
 .loading-header svg {
     height: 70px;
     width: 80px;
     vertical-align: middle;
+    user-select: none;
 }
 
 .loading-text {
@@ -66,6 +69,7 @@ body {
     font-size: 1rem;
     color: gray;
     letter-spacing: 5px;
+    user-select: none;
 }
 
 .controls {
@@ -173,6 +177,7 @@ body {
     margin: 15px;
     display: inline-block;
     transform: translateY(200%);
+    cursor: pointer;
 }
 
 .today-btn button {
