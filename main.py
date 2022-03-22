@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        return send_from_directory("static", "calendar.json")
+        return send_from_directory("calendars", "calendar2022.json")
     else:
         return render_template('index.html')
 

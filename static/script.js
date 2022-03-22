@@ -6,8 +6,7 @@ $(document).ready(function() {
         return response.json();
     })
     .then(data => {
-        calendar = data
-        loadCalendar().then(() => {
+        loadCalendar(data).then(() => {
             scrollToToday();
             hideLoading();  
             
@@ -43,44 +42,37 @@ function hideLoading() {
 }
 
 
-var calendar = {}
+var calendar = [];
 var todayTab;
 var todayBtnShown = false;
 
-async function loadCalendar() {
-    var the_date = getDateCustom();
-    for (const date in calendar) {
+async function loadCalendar(dates) {
+    for (const i in dates) {
+        var date = dates[i]
+
         var tab = document.createElement("div");
         tab.classList.add("tab");
 
         var h2 = document.createElement("h2");
-        var date_day = date.split(".")[0];
-        var date_month = months[date.split(".")[1]];
-        var d = new Date(
-            2022,
-            parseInt(date.split(".")[1]) - 1,
-            date.split(".")[0]
-        )
-        var day_week = days[d.getDay()];
-        console.log(d)
-        h2.innerHTML = date_day + ". " + date_month + " - " + day_week;
+        h2.innerHTML = 
+            `${date['day']}. ${date['month']}`
 
         var p = document.createElement("p");
-        p.innerHTML = calendar[date]["text"].replace(/\n/g, "<br>");
+        p.innerHTML = date['text'].replace("; ", "<br>");
 
         var info_block = document.createElement("div");
         info_block.classList.add("info_block");
 
         
 
-        if (calendar[date]["post"]) {
+        if (date['post']) {
             var block = document.createElement("div");
             block.classList.add("post-block", "block");
             block.innerHTML = "Пост";
             info_block.appendChild(block);
             tab.classList.add("post");
         }
-        if (calendar[date]["red"]) {
+        if (date['red']) {
             var block = document.createElement("div");
             block.classList.add("red-block", "block");
             block.innerHTML = "Црвено слово";
@@ -95,11 +87,13 @@ async function loadCalendar() {
         document.getElementsByClassName("tab-container")[0].appendChild(tab);
 
         var y = getOffset(tab).top;
-        calendar[date]["y"] = y;
-        calendar[date]["tab"] = tab;
+        date["y"] = y;
+        date["tab"] = tab;
+        calendar.push(date)
 
-        if (date == the_date) {
-            todayTab = calendar[date];
+        var d = date["day"] + " " + date["month"]
+        if (getDateForJson() == d) {
+            todayTab = date;
             tab.classList.add("today");
         }
     }
