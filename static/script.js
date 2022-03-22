@@ -8,20 +8,22 @@ $(document).ready(function() {
     .then(data => {
         loadCalendar(data).then(() => {
             requestAnimationFrame(function() {
-                scrollToToday();
-                hideLoading();  
-                
-                document.getElementsByClassName("today-btn")[0].addEventListener("click", function() {
-                    scrollToTodayAnimated();
-                });
+                setTimeout(function() {
+                    scrollToToday();
+                    hideLoading();  
+                    
+                    document.getElementsByClassName("today-btn")[0].addEventListener("click", function() {
+                        scrollToTodayAnimated();
+                    });
 
-                document.addEventListener("scroll", function() {
-                    if (!isInViewport(todayTab["tab"])) {
-                        showBackToToday()
-                    } else {
-                        hideBackToToday()
-                    }
-                });
+                    document.addEventListener("scroll", function() {
+                        if (!isInViewport(todayTab["tab"])) {
+                            showBackToToday()
+                        } else {
+                            hideBackToToday()
+                        }
+                    });
+                }, 100)
             });
         });
     })
