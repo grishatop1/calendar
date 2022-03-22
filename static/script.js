@@ -23,6 +23,10 @@ $(document).ready(function() {
                 }
             });
         });
+    })
+    .catch(err => {
+        $(".loading-text p").text("ГРЕШКА")
+        $(".loading-text p").css("color", "red")
     });
 });
 
