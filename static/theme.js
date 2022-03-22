@@ -1,5 +1,5 @@
-var dark_mode = localStorage.getItem('dark') || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-if (dark_mode)
+var dark_mode = localStorage.getItem('theme');
+if (dark_mode == "dark")
     setDarkMode()
 else
     setLightMode()
@@ -15,7 +15,7 @@ dark_btn.addEventListener("click", function() {
 
 function setDarkMode() {
     document.documentElement.setAttribute('data-theme', "dark")
-    localStorage.setItem('dark', 1);
+    localStorage.setItem('theme', "dark");
     dark_mode = true;
 
     anime({
@@ -36,7 +36,7 @@ function setDarkMode() {
 
 function setLightMode() {
     document.documentElement.setAttribute('data-theme', "light")
-    localStorage.setItem('dark', 0);
+    localStorage.setItem('theme', "light");
     dark_mode = false;
 
     anime({
