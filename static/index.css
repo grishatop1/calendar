@@ -37,13 +37,17 @@ body {
 
 .loading-header {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
 }
 
 .loading-header h2 {
-    font-size: 2rem;
+    font-size: 2.3rem;
+    font-weight: 1000;
+    /* upper case */
+    text-transform: uppercase;
+    letter-spacing: -2px;
 }
 
 .loading-header svg {
@@ -59,9 +63,9 @@ body {
 
 .loading-text p {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: gray;
-    letter-spacing: 4px;
+    letter-spacing: 5px;
 }
 
 .controls {

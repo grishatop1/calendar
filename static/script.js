@@ -56,13 +56,22 @@ async function loadCalendar() {
         var h2 = document.createElement("h2");
         var date_day = date.split(".")[0];
         var date_month = months[date.split(".")[1]];
-        h2.innerHTML = date_day + ". " + date_month;
+        var d = new Date(
+            2022,
+            parseInt(date.split(".")[1]) - 1,
+            date.split(".")[0]
+        )
+        var day_week = days[d.getDay()];
+        console.log(d)
+        h2.innerHTML = date_day + ". " + date_month + " - " + day_week;
 
         var p = document.createElement("p");
         p.innerHTML = calendar[date]["text"].replace(/\n/g, "<br>");
 
         var info_block = document.createElement("div");
         info_block.classList.add("info_block");
+
+        
 
         if (calendar[date]["post"]) {
             var block = document.createElement("div");

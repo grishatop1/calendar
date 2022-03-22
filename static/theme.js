@@ -19,14 +19,14 @@ function setDarkMode() {
     dark_mode = true;
 
     anime({
-        targets: "#dark-svg",
+        targets: "#light-svg",
         opacity: 1,
         scale: [3, 1],
         duration: 450,
         easing: 'easeOutExpo'
     })
     anime({
-        targets: "#light-svg",
+        targets: "#dark-svg",
         opacity: 0,
         scale: [1, 0],
         duration: 450,
@@ -40,14 +40,14 @@ function setLightMode() {
     dark_mode = false;
 
     anime({
-        targets: "#light-svg",
+        targets: "#dark-svg",
         opacity: 1,
         scale: [3, 1],
         duration: 450,
         easing: 'easeOutExpo'
     })
     anime({
-        targets: "#dark-svg",
+        targets: "#light-svg",
         opacity: 0,
         scale: [1, 0],
         duration: 450,

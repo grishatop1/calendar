@@ -13,6 +13,16 @@ months = {
     "12": "Децембар"
 }
 
+days = {
+    "0": "Недеља",
+    "1": "Понедељак",
+    "2": "Уторак",
+    "3": "Сриједа",
+    "4": "Четвртак",
+    "5": "Петак",
+    "6": "Субота"
+}
+
 function getDateCustom() {
     let dateObj = new Date();
     let month = dateObj.getMonth() + 1;
