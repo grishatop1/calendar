@@ -55,7 +55,7 @@ async function loadCalendar(dates) {
 
         var h2 = document.createElement("h2");
         h2.innerHTML = 
-            `${date['day']}. ${date['month']}`
+            `${date['day']}. ${date['month']} - <span>${date['week']}</span>`
 
         var p = document.createElement("p");
         p.innerHTML = date['text'].replace("; ", "<br>");

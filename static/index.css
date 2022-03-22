@@ -133,8 +133,13 @@ body {
 }
 
 .tab h2 {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     color: var(--text-color);
+}
+
+.tab h2 span {
+    font-size: 0.8em;
+    font-weight: 100;
 }
 
 .tab p {
