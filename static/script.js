@@ -4,6 +4,10 @@ p.then(() => {
         scrollToTodayAnimated();
     });
 
+    document.getElementById("switch-btn").addEventListener("click", function() {
+        showYearPicker();
+    });
+
     document.addEventListener("scroll", function() {
         if (!isInViewport(todayTab["tab"])) {
             showBackToToday()
@@ -14,7 +18,7 @@ p.then(() => {
 });
 
 async function loadEverything() {
-    response = await fetch("/", {
+    response = await fetch("/calendar/2022", {
         method: "POST"
     })
     data = await response.json()
@@ -184,4 +188,8 @@ function hideBackToToday() {
         })
         todayBtnShown = false;
     }
+}
+
+function showYearPicker() {
+
 }
