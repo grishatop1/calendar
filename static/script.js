@@ -1,37 +1,33 @@
-$(document).ready(function() {
-    fetch("/", {
-        method: "POST"
-    })
-    .then(response => {
-        return response.json();
-    })
-    .then(data => {
-        loadCalendar(data).then(() => {
-            requestAnimationFrame(function() {
-                setTimeout(function() {
-                    scrollToToday();
-                    hideLoading();  
-                    
-                    document.getElementsByClassName("today-btn")[0].addEventListener("click", function() {
-                        scrollToTodayAnimated();
-                    });
+p = loadEverything();
+p.then(() => {
+    document.getElementsByClassName("today-btn")[0].addEventListener("click", function() {
+        scrollToTodayAnimated();
+    });
 
-                    document.addEventListener("scroll", function() {
-                        if (!isInViewport(todayTab["tab"])) {
-                            showBackToToday()
-                        } else {
-                            hideBackToToday()
-                        }
-                    });
-                }, 100)
-            });
-        });
-    })
-    .catch(err => {
-        $(".loading-header h2").text("ГРЕШКА")
-        $(".loading-header h2").css("color", "red")
+    document.addEventListener("scroll", function() {
+        if (!isInViewport(todayTab["tab"])) {
+            showBackToToday()
+        } else {
+            hideBackToToday()
+        }
     });
 });
+
+async function loadEverything() {
+    response = await fetch("/", {
+        method: "POST"
+    })
+    data = await response.json()
+    await loadCalendar(data)
+    await new Promise(r => {
+        requestAnimationFrame(r);
+    });
+    await new Promise(r => {
+        setTimeout(r, 100);
+    });
+    scrollToToday();
+    hideLoading();
+}
 
 function hideLoading() {
     anime({
