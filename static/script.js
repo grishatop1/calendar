@@ -53,6 +53,11 @@ async function loadCalendar(months_data) {
         let month_node = document.createElement("div");
         month_node.classList.add("month");
 
+        let month_header = document.createElement("div");
+        month_header.classList.add("month-header");
+        month_header.innerHTML = mnth;
+        month_node.appendChild(month_header);
+
         for (const i in dates) {
             var date = dates[i]
 
@@ -83,6 +88,8 @@ async function loadCalendar(months_data) {
                 block.classList.add("red-block", "block");
                 block.innerHTML = "Црвено слово";
                 info_block.appendChild(block);
+                tab.classList.add("red");
+            } else if (date["week"] == "недеља") {
                 tab.classList.add("red");
             }
 
