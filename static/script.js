@@ -19,13 +19,14 @@ async function loadEverything() {
     })
     data = await response.json()
     await loadCalendar(data)
+    scrollToToday();
     await new Promise(r => {
         requestAnimationFrame(r);
     });
     await new Promise(r => {
         setTimeout(r, 100);
     });
-    scrollToToday();
+    
     hideLoading();
 }
 
@@ -46,70 +47,76 @@ var calendar = [];
 var todayTab;
 var todayBtnShown = false;
 
-async function loadCalendar(dates) {
-    for (const i in dates) {
-        var date = dates[i]
+async function loadCalendar(months_data) {
+    for (const [mnth, dates] of Object.entries(months_data)) {
 
-        var tab = document.createElement("div");
-        tab.classList.add("tab");
+        let month_node = document.createElement("div");
+        month_node.classList.add("month");
 
-        var h2 = document.createElement("h2");
-        h2.innerHTML = 
-            `${date['day']}. ${date['month']} - <span>${date['week']}</span>`
+        for (const i in dates) {
+            var date = dates[i]
 
-        var p = document.createElement("p");
-        p.innerHTML = date['text'].replace("; ", "<br>");
+            var tab = document.createElement("div");
+            tab.classList.add("tab");
 
-        var info_block = document.createElement("div");
-        info_block.classList.add("info_block");
+            var h2 = document.createElement("h2");
+            h2.innerHTML = 
+                `${date['day']}. ${date['month']} - <span>${date['week']}</span>`
 
-        
+            var p = document.createElement("p");
+            p.innerHTML = date['text'].replace("; ", "<br>");
 
-        if (date['post']) {
-            var block = document.createElement("div");
-            block.classList.add("post-block", "block");
-            block.innerHTML = "Пост";
-            info_block.appendChild(block);
-            tab.classList.add("post");
+            var info_block = document.createElement("div");
+            info_block.classList.add("info_block");
+
+            
+
+            if (date['post']) {
+                var block = document.createElement("div");
+                block.classList.add("post-block", "block");
+                block.innerHTML = "Пост";
+                info_block.appendChild(block);
+                tab.classList.add("post");
+            }
+            if (date['red']) {
+                var block = document.createElement("div");
+                block.classList.add("red-block", "block");
+                block.innerHTML = "Црвено слово";
+                info_block.appendChild(block);
+                tab.classList.add("red");
+            }
+
+            tab.appendChild(h2);
+            tab.appendChild(p);
+            tab.appendChild(info_block);
+
+            month_node.appendChild(tab);
+
+            date["tab"] = tab;
+            calendar.push(date)
+
+            var d = date["day"] + " " + date["month"]
+            if (getDateForJson() == d) {
+                todayTab = date;
+                tab.classList.add("today");
+            }
         }
-        if (date['red']) {
-            var block = document.createElement("div");
-            block.classList.add("red-block", "block");
-            block.innerHTML = "Црвено слово";
-            info_block.appendChild(block);
-            tab.classList.add("red");
-        }
 
-        tab.appendChild(h2);
-        tab.appendChild(p);
-        tab.appendChild(info_block);
-
-        document.getElementsByClassName("tab-container")[0].appendChild(tab);
-
-        var y = getOffset(tab).top;
-        date["y"] = y;
-        date["tab"] = tab;
-        calendar.push(date)
-
-        var d = date["day"] + " " + date["month"]
-        if (getDateForJson() == d) {
-            todayTab = date;
-            tab.classList.add("today");
-        }
+        document.getElementsByClassName("tab-container")[0].appendChild(month_node);
     }
 }
 
 function scrollToToday() {
-    var y = todayTab["y"];
-    var tab = todayTab["tab"];
+    let tab = todayTab["tab"];
+    let y = getOffset(tab).top;
     window.scrollTo(0, y - (window.innerHeight / 2) + (tab.offsetHeight / 2));
     flashToday()
 }
 
 function scrollToTodayAnimated() {
     const scrollElement = window.document.scrollingElement || window.document.body || window.document.documentElement;
-    let y = todayTab["y"];
     let tab = todayTab["tab"];
+    let y = getOffset(tab).top;
     anime({
         targets: scrollElement,
         scrollTop: y - (window.innerHeight / 2) + (tab.offsetHeight / 2),
