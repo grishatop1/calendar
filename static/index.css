@@ -130,7 +130,7 @@ body {
     transform: translateX(-50%);
     width: 300px;
     text-align: center;
-    background-color: var(--background-color);
+    background-color: var(--text-color);
     border-radius: 10px;
     padding: 10px;
 }
@@ -154,10 +154,10 @@ body {
     padding: 10px;
     margin: 10px;
     border: none;
-    background-color: var(--text-color);
+    background-color: var(--background-color);
     border-radius: 5px;
     cursor: pointer;
-    color: var(--background-color);
+    color: var(--text-color);
     transition: background-color 0.2s, color 0.2s;
     font-size: 1.5em;
     font-weight: bold;
