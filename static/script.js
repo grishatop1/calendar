@@ -99,14 +99,14 @@ async function loadCalendar(months_data) {
 
             if (date['post']) {
                 var block = document.createElement("div");
-                block.classList.add("post-block", "block");
+                block.classList.add("post-block", "block", "noSelect");
                 block.innerHTML = "Пост";
                 info_block.appendChild(block);
                 tab.classList.add("post");
             }
             if (date['red']) {
                 var block = document.createElement("div");
-                block.classList.add("red-block", "block");
+                block.classList.add("red-block", "block", "noSelect");
                 block.innerHTML = "Црвено слово";
                 info_block.appendChild(block);
                 tab.classList.add("red");

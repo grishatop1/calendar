@@ -25,6 +25,12 @@ body {
     transition: background-color 0.2s, color 0.2s;
 }
 
+.noSelect {
+    -webkit-user-select: none !important; /* Safari */
+    -ms-user-select: none !important; /* IE 10 and IE 11 */
+    user-select: none !important; /* Standard syntax */        /* Non-prefixed version */
+}
+
 .loading {
     position: fixed;
     top: 0;
