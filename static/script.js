@@ -16,12 +16,9 @@ p.then(() => {
         }
     });
 
-    $(".select-year-item").click(function() {
+    $(".select-year-btn").click(function() {
         var year = $(this).attr("data-year");
         switchYear(year);
-    });
-    $(".select-year-wrap").click(function(e) {
-        hideYearPicker();
     });
 });
 
@@ -209,32 +206,70 @@ function hideBackToToday() {
     }
 }
 
+var pickerShown = false;
+var allowShow = true;
 function showYearPicker() {
-    var year_picker = document.getElementsByClassName("select-year-wrap")[0];
-    if (year_picker.style.display != "none") return
-    year_picker.style.display = "block";
-    anime({
-        targets: year_picker,
-        opacity: [0, 1],
-        duration: 100,
-        easing: 'easeInOutQuad'
-    })
+    if (!allowShow) return;
+    allowShow = false;
+    if (!pickerShown) {
+        let buttons = document.getElementsByClassName("select-year-btn");
+        let calendar_btn = document.getElementById("switch-btn");
+        $(".select-year-btn").css("display", "block");
+        for (let i = 0; i < buttons.length; i++) {
+            let toAdd = 10;
+            if (i > 0) toAdd = 20
+            anime({
+                targets: buttons[i],
+                translateY: [0, 50*i + 50 + toAdd],
+                duration: 150,
+                easing: 'easeInOutQuad',
+                complete: function() {
+                    pickerShown = true;
+                }
+            })
+            anime({
+                targets: calendar_btn,
+                rotate: [0, -180],
+                duration: 150,
+                easing: 'easeInOutQuad'
+            })
+        }
+        setTimeout(function() {
+            pickerShown = true;
+            allowShow = true;
+        }, 150);
+    } else {
+        hideYearPicker()   
+    }
 }
 
 function hideYearPicker() {
-    var year_picker = document.getElementsByClassName("select-year-wrap")[0];
-    anime({
-        targets: year_picker,
-        opacity: [1, 0],
-        duration: 100,
-        easing: 'easeInOutQuad',
-        complete: function() {
-            year_picker.style.display = "none";
-        }
-    })
+    let buttons = document.getElementsByClassName("select-year-btn");
+    let calendar_btn = document.getElementById("switch-btn");
+    for (let i = buttons.length - 1; i >= 0; i--) {
+        anime({
+            targets: buttons[i],
+            translateY: [50*i + 50, 0],
+            duration: 150,
+            easing: 'easeInOutQuad'
+        })
+        anime({
+            targets: calendar_btn,
+            rotate: [-180, 0],
+            duration: 150,
+            easing: 'easeInOutQuad'
+        })
+    }
+    setTimeout(function() {
+        pickerShown = false;
+        allowShow = true;
+        $(".select-year-btn").css("display", "none");
+    }, 150);
 }
 
+var currentYear = 2022;
 function switchYear(year) {
+    if (currentYear == year) return;
     var year_items = document.getElementsByClassName("select-year")[0].children;
     // set class selected to year item where attribute data-year == year
     for (const i in year_items) {
@@ -246,6 +281,8 @@ function switchYear(year) {
             year_items[i].classList.remove("selected-year");
         }
     }
+    hideYearPicker();
+    currentYear = parseInt(year);
     showLoading(function() {
         loadEverything(year);
     });
