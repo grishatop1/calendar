@@ -125,7 +125,8 @@ body {
     display: none;
     z-index: -1;
     top: 0px;
-    color: var(--background-color)
+    color: var(--background-color);
+    user-select: none;
 }
 
 .selected-year::after {
@@ -186,11 +187,13 @@ body {
 .red-block {
     border: 1px solid red;
     color: red;
+    user-select: none;
 }
 
 .post-block {
     border: 1px solid var(--text-color);
     color: var(--text-color);
+    user-select: none;
 }
 
 .block {
