@@ -30,3 +30,7 @@ function getDateForJson() {
     let str = day + " " + months[month];
     return str;
 }
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}

@@ -23,13 +23,19 @@ p.then(() => {
 });
 
 async function loadEverything(year) {
-    response = await fetch(`/calendar/${year}`, {
-        method: "POST"
-    })
-    data = await response.json()
-    await loadCalendar(data)
-    scrollToToday();
+    let calendar_data = localStorage.getItem(year);
+    if (!calendar_data) {
+        response = await fetch(`/calendar/${year}`, {
+            method: "POST"
+        })
+        var data = await response.json()
+        localStorage.setItem(year, JSON.stringify(data));
+    } else {
+        var data = JSON.parse(calendar_data);
+    }
+    await loadCalendar(data);
     await new Promise(r => {
+        scrollToToday();
         requestAnimationFrame(r);
     });
     await new Promise(r => {
@@ -62,8 +68,6 @@ function hideLoading() {
     });
 }
 
-
-var calendar = [];
 var todayTab;
 var todayBtnShown = false;
 
@@ -121,7 +125,6 @@ async function loadCalendar(months_data) {
             month_node.appendChild(tab);
 
             date["tab"] = tab;
-            calendar.push(date)
 
             var d = date["day"] + " " + date["month"]
             if (getDateForJson() == d) {
@@ -134,6 +137,9 @@ async function loadCalendar(months_data) {
 }
 
 function scrollToToday() {
+    if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual'
+      }
     let tab = todayTab["tab"];
     let y = getOffset(tab).top;
     window.scrollTo(0, y - (window.innerHeight / 2) + (tab.offsetHeight / 2));
