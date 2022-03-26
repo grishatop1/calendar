@@ -1,2 +1,2 @@
 # calendar
- an static orthodox calendar made in vanilla js
+ an orthodox calendar made in vanilla js
